@@ -12,36 +12,9 @@ CORS(app)
 client = anthropic.Anthropic(api_key=os.environ.get("ANTHROPIC_API_KEY"))
 
 videos = [
-    {
-        "id": "HF001",
-        "title": "Chair/Bench Workout",
-        "duration": "2+ mins",
-        "level": "Beginner",
-        "type": "Movement",
-        "focus": "Full Body",
-        "equipment": "Chair/Bench",
-        "link": "https://youtube.com/shorts/MvmoFLbp0lQ"
-    },
-    {
-        "id": "HF002",
-        "title": "Squats and Incline Pushup Workout",
-        "duration": "90 secs",
-        "level": "Beginner",
-        "type": "Movement",
-        "focus": "Full Body",
-        "equipment": "Chair/Bench",
-        "link": "https://youtu.be/I4sQciRQZnY"
-    },
-    {
-        "id": "HF003",
-        "title": "No Equipment Full Body Workout",
-        "duration": "75 secs",
-        "level": "Beginner",
-        "type": "Movement",
-        "focus": "Full Body",
-        "equipment": "None",
-        "link": "https://youtu.be/ocSXotIYers"
-    }
+    {"id":"HF001","title":"Chair/Bench Workout","duration":"2+ mins","level":"Beginner","type":"Movement","focus":"Full Body","equipment":"Chair/Bench","link":"https://youtube.com/shorts/MvmoFLbp0lQ"},
+    {"id":"HF002","title":"Squats and Incline Pushup Workout","duration":"90 secs","level":"Beginner","type":"Movement","focus":"Full Body","equipment":"Chair/Bench","link":"https://youtu.be/l4sQciRQZnY"},
+    {"id":"HF003","title":"No Equipment Full Body Workout","duration":"75 secs","level":"Beginner","type":"Movement","focus":"Full Body","equipment":"None","link":"https://youtu.be/ocSXotIYers"}
 ]
 
 @app.route('/chat', methods=['POST'])
@@ -51,12 +24,7 @@ def chat():
     message = client.messages.create(
         model="claude-sonnet-4-6",
         max_tokens=1024,
-        system="""You are the Hype Fitness and Wellness AI assistant coach.
-You speak in a warm, encouraging and calm tone.
-You help beginners and busy professionals build healthy habits.
-Your philosophy is: start small, stay consistent.
-You have access to this video library: """ + str(videos) + """
-Respond in plain conversational text only. No markdown, no ** bold **, no ## headers, no bullet symbols. Just clean sentences and paragraphs.""",
+        system="You are the Hype Fitness and Wellness AI assistant coach. You speak in a warm, encouraging and calm tone. You help beginners and busy professionals build healthy habits. Your philosophy is: start small, stay consistent. You have access to this video library: " + str(videos) + " Respond in plain conversational text only. No markdown, no bold, no headers.",
         messages=[{"role": "user", "content": question}]
     )
     return jsonify({"response": message.content[0].text})
