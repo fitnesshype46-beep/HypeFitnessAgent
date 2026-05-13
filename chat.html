@@ -44,7 +44,7 @@ async function send() {
     messages.innerHTML += '<div class="coach-msg">Thinking...</div>';
     
     try {
-        var r = await fetch('http://127.0.0.1:5000/chat', {
+        var r = await fetch('/chat', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({message: msg})
