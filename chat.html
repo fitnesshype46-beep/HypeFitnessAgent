@@ -51,7 +51,8 @@ async function send() {
         });
         var data = await r.json();
         var msgs = messages.getElementsByClassName('coach-msg');
-        msgs[msgs.length-1].innerHTML = data.response;
+        var responseText = data.response.replace(/(https?:\/\/[^\s]+)/g, '<a href="$1" target="_blank" style="color:#E87722;">$1</a>');
+msgs[msgs.length-1].innerHTML = responseText;
     } catch(e) {
         var msgs = messages.getElementsByClassName('coach-msg');
         msgs[msgs.length-1].innerHTML = 'Connection error. Make sure Flask is running!';
